@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Datos
 from django.views.decorators.http import require_http_methods
+from django.shortcuts import render
 import json
 
 
@@ -61,3 +62,6 @@ def eliminar_producto(request, pk):
         return JsonResponse({'message': 'Producto eliminado correctamente'})
     except dato.DoesNotExist:
         return JsonResponse({'error': 'Producto no encontrado'}, status=404)
+    
+def index(request):
+    return render(request, 'templates/app/index.html')

@@ -24,6 +24,7 @@ from . import views
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="index.html"), name='index'),
+    path('', views.index, name='index'),
     path('api/datos/', views.obtener_datos, name='obtener_datos'),  
     path('api/datos/<int:pk>/', views.obtener_producto, name='obtener_producto'),  
     path('api/datos/nuevo/', views.crear_producto, name='crear_producto'),  
