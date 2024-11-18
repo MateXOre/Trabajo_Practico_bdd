@@ -18,12 +18,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from aplicacion import views
-
+from django.views.generic import TemplateView
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="index.html"), name='index'),
+    path('', TemplateView.as_view(template_name='aplicacion/index.html'), name='index'),
     path('', views.index, name='index'),
     path('api/datos/', views.obtener_datos, name='obtener_datos'),  
     path('api/datos/<int:pk>/', views.obtener_producto, name='obtener_producto'),  

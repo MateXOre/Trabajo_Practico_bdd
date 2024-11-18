@@ -8,3 +8,5 @@ urlpatterns = [
     path('', include('aplicacion.urls')), 
 ]
 
+#python manage.py runserver
+
