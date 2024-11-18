@@ -7,6 +7,7 @@ import json
 
 
 #GET DE TODOS
+@csrf_exempt 
 @require_http_methods(["GET"])
 def obtener_datos(request):
     dato = Datos.objects.all()
@@ -14,6 +15,7 @@ def obtener_datos(request):
     return JsonResponse(lista_Datos, safe=False)
 
 #GET INDIVIDUAL
+@csrf_exempt 
 @require_http_methods(["GET"])
 def obtener_producto(request, pk):
         dato = Datos.objects.get(pk=pk)

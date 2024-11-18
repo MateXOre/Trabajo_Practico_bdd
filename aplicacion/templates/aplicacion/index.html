@@ -9,19 +9,23 @@
 </head>
 <body>
     <h1>CRUD con JavaScript y Django</h1>
+    
     <div>
         <h2>Agregar Producto</h2>
-        <form id="form-create">
+        <form id="form-create" method="POST">
+            {% csrf_token %}
             <input type="text" id="nombre" placeholder="Nombre" required>
             <input type="text" id="descripcion" placeholder="Descripción" required>
             <input type="number" id="valor" placeholder="Valor" step="0.01" required>
             <button type="submit">Agregar</button>
         </form>
     </div>
+
     <div>
         <h2>Lista de Productos</h2>
         <ul id="lista-productos"></ul>
     </div>
+
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

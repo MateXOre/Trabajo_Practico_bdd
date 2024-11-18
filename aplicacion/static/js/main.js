@@ -1,4 +1,10 @@
-const apiBaseUrl = "http://127.0.0.1:8000/api"
+const apiBaseUrl = "http://127.0.0.1:8000/api";
+
+// Función para obtener el token CSRF desde las cookies
+function getCSRFToken() {
+    const cookieValue = document.cookie.match('(^|;)\\s*csrftoken\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     obtenerDatos();
@@ -10,10 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const descripcion = document.getElementById("descripcion").value;
         const valor = parseFloat(document.getElementById("valor").value);
 
-        const response = await fetch(`${apiBaseUrl}/datos/`, {
+        const response = await fetch(`${apiBaseUrl}/datos/nuevo/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken(), // Incluyendo el token CSRF en los encabezados
             },
             body: JSON.stringify({ nombre, descripcion, valor }),
         });
