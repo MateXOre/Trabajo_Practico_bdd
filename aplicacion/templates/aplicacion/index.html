@@ -26,6 +26,20 @@
         <ul id="lista-productos"></ul>
     </div>
 
+    <!-- Modal para editar productos -->
+    <div id="modal-editar" style="display: none; background: #f0f0f0; padding: 20px; border: 1px solid #ccc;">
+        <h2>Editar Producto</h2>
+        <form id="form-edit" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="editar-id">
+            <input type="text" id="editar-nombre" placeholder="Nombre" required>
+            <input type="text" id="editar-descripcion" placeholder="Descripción" required>
+            <input type="number" id="editar-valor" placeholder="Valor" step="0.01" required>
+            <button type="submit">Guardar Cambios</button>
+        </form>
+        <button onclick="cerrarModal()">Cancelar</button>
+    </div>
+
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

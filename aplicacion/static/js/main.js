@@ -9,6 +9,7 @@ function getCSRFToken() {
 document.addEventListener("DOMContentLoaded", () => {
     obtenerDatos();
 
+    // Manejar formulario para crear productos
     const formCreate = document.getElementById("form-create");
     formCreate.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-CSRFToken": getCSRFToken(), // Incluyendo el token CSRF en los encabezados
+                "X-CSRFToken": getCSRFToken(),
             },
             body: JSON.stringify({ nombre, descripcion, valor }),
         });
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Obtener todos los productos
 async function obtenerDatos() {
     const response = await fetch(`${apiBaseUrl}/datos/`);
     const productos = await response.json();
@@ -43,7 +45,72 @@ async function obtenerDatos() {
 
     productos.forEach((producto) => {
         const li = document.createElement("li");
-        li.textContent = `${producto.nombre} - ${producto.descripcion} - $${producto.valor}`;
+        li.innerHTML = `
+            ${producto.nombre} - ${producto.descripcion} - $${producto.valor} 
+            <button onclick="editarProducto(${producto.id}, '${producto.nombre}', '${producto.descripcion}', ${producto.valor})">Editar</button>
+            <button onclick="eliminarProducto(${producto.id})">Eliminar</button>
+        `;
         listaProductos.appendChild(li);
     });
+}
+
+// Función para mostrar el modal de edición
+function editarProducto(id, nombre, descripcion, valor) {
+    document.getElementById("editar-id").value = id;
+    document.getElementById("editar-nombre").value = nombre;
+    document.getElementById("editar-descripcion").value = descripcion;
+    document.getElementById("editar-valor").value = valor;
+
+    document.getElementById("modal-editar").style.display = "block";
+}
+
+// Cerrar el modal de edición
+function cerrarModal() {
+    document.getElementById("modal-editar").style.display = "none";
+}
+
+// Manejar formulario para editar productos
+const formEdit = document.getElementById("form-edit");
+formEdit.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = document.getElementById("editar-id").value;
+    const nombre = document.getElementById("editar-nombre").value;
+    const descripcion = document.getElementById("editar-descripcion").value;
+    const valor = parseFloat(document.getElementById("editar-valor").value);
+
+    const response = await fetch(`${apiBaseUrl}/datos/${id}/editar/`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken(),
+        },
+        body: JSON.stringify({ nombre, descripcion, valor }),
+    });
+
+    if (response.ok) {
+        alert("Producto actualizado exitosamente");
+        cerrarModal();
+        obtenerDatos();
+    } else {
+        alert("Error al actualizar producto");
+    }
+});
+
+// Eliminar un producto
+async function eliminarProducto(id) {
+    if (confirm("¿Estás seguro de que quieres eliminar este producto?")) {
+        const response = await fetch(`${apiBaseUrl}/datos/${id}/eliminar/`, {
+            method: "DELETE",
+            headers: {
+                "X-CSRFToken": getCSRFToken(),
+            },
+        });
+
+        if (response.ok) {
+            alert("Producto eliminado correctamente");
+            obtenerDatos();
+        } else {
+            alert("Error al eliminar producto");
+        }
+    }
 }
