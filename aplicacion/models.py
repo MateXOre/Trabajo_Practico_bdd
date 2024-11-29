@@ -3,7 +3,6 @@ from bson import ObjectId
 
 # Modelo SQL
 class Datos(models.Model):
-
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     valor = models.DecimalField(max_digits=10, decimal_places=2)
@@ -12,18 +11,15 @@ class Datos(models.Model):
         return self.nombre
 
 # Modelo NoSQL
-class DatosNoSQL:
+class DatosNoSQL():
     def __init__(self, collection):
         self.collection = collection
 
     @classmethod
-    def create(cls, nombre, descripcion, valor, metadata):
-        documento = {
-            'nombre': nombre,
-            'descripcion': descripcion,
-            'valor': float(valor),
-            'metadata': metadata or {}
-        }
+    def create(cls, **kwargs):
+        documento = {k: v for k, v in kwargs.items() if k in ['nombre', 'descripcion', 'valor', 'metadata']}
+        documento['metadata'] = documento.get('metadata', {})
+        documento['valor'] = float(documento.get('valor', 0))
         return documento
 
     def save(self, documento):
