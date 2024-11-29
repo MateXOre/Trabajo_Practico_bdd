@@ -30,5 +30,9 @@ urlpatterns = [
     path('api/datos/nuevo/', views.crear_producto, name='crear_producto'),  
     path('api/datos/<int:pk>/editar/', views.actualizar_producto, name='actualizar_producto'),  
     path('api/datos/<int:pk>/eliminar/', views.eliminar_producto, name='eliminar_producto'),  
+    path('api/nosql/datos/', views.obtener_datos_nosql, name='obtener_datos_nosql'),
+    path('api/nosql/datos/<int:pk>/', views.obtener_producto_nosql, name='obtener_producto_nosql'),
+    path('api/nosql/datos/nuevo/', views.crear_producto_nosql, name='crear_producto_nosql'),  
+    path('api/nosql/datos/<str:pk>/editar/', views.actualizar_producto_nosql, name='actualizar_producto_nosql'),
+    path('api/nosql/datos/<str:pk>/eliminar/', views.eliminar_producto_nosql, name='eliminar_producto_nosql'),
 ]
-
