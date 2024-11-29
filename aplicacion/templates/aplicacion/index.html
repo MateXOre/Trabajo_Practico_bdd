@@ -5,39 +5,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD con JavaScript y Django</title>
+    <title>CRUD con JavaScript y Django - Relacional y NoSQL</title>
+    <style>
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+        .tab.active {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        .contenido {
+            display: none;
+        }
+        .contenido.activo {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <h1>CRUD con JavaScript y Django</h1>
+    <h1>CRUD con JavaScript y Django - Bases de Datos</h1>
     
-    <div>
-        <h2>Agregar Producto</h2>
-        <form id="form-create" method="POST">
-            {% csrf_token %}
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="text" id="descripcion" placeholder="Descripción" required>
-            <input type="number" id="valor" placeholder="Valor" step="0.01" required>
-            <button type="submit">Agregar</button>
-        </form>
+    <!-- Pestañas de navegación -->
+    <div class="tabs">
+        <div id="tab-relacional" class="tab active">Base de Datos Relacional</div>
+        <div id="tab-nosql" class="tab">Base de Datos NoSQL</div>
     </div>
 
-    <div>
-        <h2>Lista de Productos</h2>
-        <ul id="lista-productos"></ul>
+    <!-- Contenido Base de Datos Relacional -->
+    <div id="contenido-relacional" class="contenido" style="display: block;">
+        <h2>Base de Datos Relacional (SQLite)</h2>
+        
+        <div>
+            <h3>Agregar Producto</h3>
+            <form id="form-create-relacional" method="POST">
+                {% csrf_token %}
+                <input type="text" id="nombre-relacional" placeholder="Nombre" required>
+                <input type="text" id="descripcion-relacional" placeholder="Descripción" required>
+                <input type="number" id="valor-relacional" placeholder="Valor" step="0.01" required>
+                <button type="submit">Agregar Producto</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>Lista de Productos</h3>
+            <ul id="lista-productos-relacional"></ul>
+        </div>
+
+        <!-- Modal para editar productos relacionales -->
+        <div id="modal-editar-relacional" style="display: none; background: #f0f0f0; padding: 20px; border: 1px solid #ccc;">
+            <h3>Editar Producto</h3>
+            <form id="form-edit-relacional" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="editar-id-relacional">
+                <input type="text" id="editar-nombre-relacional" placeholder="Nombre" required>
+                <input type="text" id="editar-descripcion-relacional" placeholder="Descripción" required>
+                <input type="number" id="editar-valor-relacional" placeholder="Valor" step="0.01" required>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+            <button onclick="cerrarModalRelacional()">Cancelar</button>
+        </div>
     </div>
 
-    <!-- Modal para editar productos -->
-    <div id="modal-editar" style="display: none; background: #f0f0f0; padding: 20px; border: 1px solid #ccc;">
-        <h2>Editar Producto</h2>
-        <form id="form-edit" method="POST">
-            {% csrf_token %}
-            <input type="hidden" id="editar-id">
-            <input type="text" id="editar-nombre" placeholder="Nombre" required>
-            <input type="text" id="editar-descripcion" placeholder="Descripción" required>
-            <input type="number" id="editar-valor" placeholder="Valor" step="0.01" required>
-            <button type="submit">Guardar Cambios</button>
-        </form>
-        <button onclick="cerrarModal()">Cancelar</button>
+    <!-- Contenido Base de Datos NoSQL -->
+    <div id="contenido-nosql" class="contenido">
+        <h2>Base de Datos NoSQL (MongoDB)</h2>
+        
+        <div>
+            <h3>Agregar Producto</h3>
+            <form id="form-create-nosql" method="POST">
+                {% csrf_token %}
+                <input type="text" id="nombre-nosql" placeholder="Nombre" required>
+                <input type="text" id="descripcion-nosql" placeholder="Descripción" required>
+                <input type="number" id="valor-nosql" placeholder="Valor" step="0.01" required>
+                <textarea id="metadata-nosql" placeholder='Metadata (JSON válido, ej: {"color": "rojo"})'></textarea>
+                <button type="submit">Agregar Producto</button>
+            </form>
+        </div>
+
+        <div>
+            <h3>Lista de Productos</h3>
+            <ul id="lista-productos-nosql"></ul>
+        </div>
+
+        <!-- Modal para editar productos NoSQL -->
+        <div id="modal-editar-nosql" style="display: none; background: #f0f0f0; padding: 20px; border: 1px solid #ccc;">
+            <h3>Editar Producto</h3>
+            <form id="form-edit-nosql" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="editar-id-nosql">
+                <input type="text" id="editar-nombre-nosql" placeholder="Nombre" required>
+                <input type="text" id="editar-descripcion-nosql" placeholder="Descripción" required>
+                <input type="number" id="editar-valor-nosql" placeholder="Valor" step="0.01" required>
+                <textarea id="editar-metadata-nosql" placeholder="Metadata (JSON opcional, ej: {'color': 'rojo'})"></textarea>
+                <button type="submit">Guardar Cambios</button>
+            </form>
+            <button onclick="cerrarModalNoSQL()">Cancelar</button>
+        </div>
     </div>
 
     <script src="{% static 'js/main.js' %}"></script>
