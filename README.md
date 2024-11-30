@@ -5,7 +5,6 @@
   - Dependencias:
     ```
     python -m venv venv
-    venv\Scripts\activate
     ```
     
   - Instalar MongoDB como servicio. Enlace al instalador oficial: https://www.mongodb.com/try/download/community
