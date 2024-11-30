@@ -1,12 +1,8 @@
 # TP Base de Datos - Cátedra Merlino. Bases de Datos Relacionales y NoSQL
 # ¿Cómo levantar el proyecto?
 # Desde Windows
-  - Instalar Python junto a sus dependencias. Enlace oficial: https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare
-  - Dependencias:
-    ```
-    python -m venv venv
-    ```
-    
+  - Instalar Python. Enlace oficial: https://www.microsoft.com/store/productId/9NRWMJP3717K?ocid=pdpshare
+
   - Instalar MongoDB como servicio. Enlace al instalador oficial: https://www.mongodb.com/try/download/community
   - Configurar variable de entorno (segun tu versión instalada): Explorador -> Editar las variables de entorno del sistema -> Variables de entorno -> Variables del sistema -> Path -> Nuevo -> C:\Program Files\MongoDB\Server\{Version}\bin
   - Iniciar ejecución del servicio (si no está en ejecución):
